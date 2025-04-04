@@ -1,9 +1,15 @@
 {
   "mainAssemblyName": "EchoesOfAshWeb",
   "resources": {
+<<<<<<< HEAD
     "hash": "sha256-9F8lkPFfPplow1YeunX1gc4+bkNujvEJA6mf8Vn41cE=",
     "fingerprinting": {
       "EchoesOfAshWeb.gxzxebgiv2.wasm": "EchoesOfAshWeb.wasm",
+=======
+    "hash": "sha256-TMQ+ype1mNUytQyq/roig5+gNfaEhnv2BO4S1vYKjhI=",
+    "fingerprinting": {
+      "EchoesOfAshWeb.b1mhkcwg9e.wasm": "EchoesOfAshWeb.wasm",
+>>>>>>> d9347a3a7b23cc951d5c306f4141eeaf3a8a2a74
       "Microsoft.AspNetCore.Components.ripjy7oxdp.wasm": "Microsoft.AspNetCore.Components.wasm",
       "Microsoft.AspNetCore.Components.Web.737bcvcrcs.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
       "Microsoft.AspNetCore.Components.WebAssembly.ojjbeuchn6.wasm": "Microsoft.AspNetCore.Components.WebAssembly.wasm",
@@ -66,7 +72,11 @@
       "System.Runtime.InteropServices.JavaScript.v6n6nxwok6.wasm": "sha256-51U1Jop+TFZlL27Bx6Je5B5J9n00+dyKolwuS3qVOUA="
     },
     "assembly": {
+<<<<<<< HEAD
       "EchoesOfAshWeb.gxzxebgiv2.wasm": "sha256-JI7cBgWTE00SEVj0XWNj9OZwpCSPUAdAsZilqce4oRs=",
+=======
+      "EchoesOfAshWeb.b1mhkcwg9e.wasm": "sha256-MTKcvSMeCSKeRFmFDVFfw9ZlkDfevRIogyrETbQSzkM=",
+>>>>>>> d9347a3a7b23cc951d5c306f4141eeaf3a8a2a74
       "Microsoft.AspNetCore.Components.ripjy7oxdp.wasm": "sha256-DVov5E76AyrDmuuzxE07LPEqQd15SDUInWvtwfda2Sw=",
       "Microsoft.AspNetCore.Components.Web.737bcvcrcs.wasm": "sha256-XR85e4OL0FCY4aIjKKV0OeiERVvPj/CqtMU/Cd/hZK8=",
       "Microsoft.AspNetCore.Components.WebAssembly.ojjbeuchn6.wasm": "sha256-TMJrwxmh7raq50FXlf8OFb9/PXWC0dJ48IVhshQE3jE=",
