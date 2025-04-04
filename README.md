@@ -8,7 +8,7 @@ The world as you knew it ended 5 years ago in a flash of nuclear fire. You've su
 
 ## Play the Game
 
-You can play the game online at: https://itsheyblinkn.github.io/EchoesOfAsh/
+You can play the game online at: https://itsheyblinken.github.io/EchoesOfAsh/
 
 ## Features
 
