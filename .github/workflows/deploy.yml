@@ -37,6 +37,7 @@ jobs:
           rm -rf docs
           mkdir -p docs
           cp -r publish/wwwroot/* docs/
+          touch docs/.nojekyll
 
       - name: Commit and push changes
         run: |
