@@ -1,0 +1,246 @@
+/* Game specific styles */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #0f0f0f;
+    color: #33ff33;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.game-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    text-shadow: 0 0 10px #33ff33;
+}
+
+.game-status {
+    font-size: 1rem;
+}
+
+.game-content {
+    display: flex;
+    flex: 1;
+    gap: 20px;
+    height: calc(100vh - 100px);
+}
+
+.game-sidebar {
+    width: 300px;
+    background-color: #000;
+    border: 1px solid #33ff33;
+    border-radius: 5px;
+    padding: 15px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(51, 255, 51, 0.5);
+}
+
+.game-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.command-list h3 {
+    color: #ffcc00;
+    margin-top: 0;
+    text-align: center;
+    border-bottom: 1px solid #33ff33;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.command-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.command-list li {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.command-list strong {
+    color: #33ff33;
+}
+
+.terminal {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #000;
+    border: 1px solid #33ff33;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(51, 255, 51, 0.5);
+    border-radius: 5px;
+}
+
+.input-area {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.input-area input {
+    flex: 1;
+    background-color: #000;
+    color: #33ff33;
+    border: 1px solid #33ff33;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    border-radius: 5px 0 0 5px;
+}
+
+.input-area button {
+    background-color: #33ff33;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+}
+
+.input-area button:hover {
+    background-color: #66ff66;
+}
+
+/* Message styles */
+.system {
+    color: #ffcc00;
+    white-space: pre;
+    margin-bottom: 15px;
+}
+
+.command {
+    color: #33ff33;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.response {
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.location {
+    color: #66ccff;
+    margin-bottom: 15px;
+}
+
+.game-over {
+    color: #ff3333;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 20px 0;
+}
+
+.stats {
+    color: #ffcc00;
+    margin-bottom: 15px;
+}
+
+/* CRT effect */
+.terminal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Scanline effect */
+@keyframes scanline {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.terminal::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: rgba(51, 255, 51, 0.2);
+    animation: scanline 6s linear infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .game-sidebar {
+        width: 250px;
+    }
+
+    .command-list li {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        padding: 10px;
+    }
+
+    .game-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .game-content {
+        flex-direction: column;
+        height: calc(100vh - 80px);
+    }
+
+    .game-sidebar {
+        width: 100%;
+        max-height: 200px;
+        margin-bottom: 15px;
+    }
+
+    .terminal {
+        padding: 10px;
+    }
+
+    .input-area input, .input-area button {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .game-status {
+        margin-top: 5px;
+    }
+
+    .game-sidebar {
+        max-height: 150px;
+    }
+}
