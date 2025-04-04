@@ -1,0 +1,190 @@
+@page "/game"
+@using EchoesOfAshWeb.GameEngine
+@using EchoesOfAshWeb.Models
+@using EchoesOfAshWeb.Data
+@using System.Timers
+@inject IJSRuntime JSRuntime
+@implements IDisposable
+
+<div class="game-container">
+    <div class="game-header">
+        <h1>Echoes of Ash</h1>
+        <div class="game-status">
+            @if (_gameState != null && _gameState.Player != null)
+            {
+                <span>@_gameState.GetTimeInfo()</span>
+            }
+        </div>
+    </div>
+
+    <div class="game-content">
+        <div class="game-sidebar">
+            <div class="command-list">
+                <h3>Available Commands</h3>
+                <ul>
+                    <li><strong>help</strong> - Show help</li>
+                    <li><strong>look</strong> - Look around</li>
+                    <li><strong>go [direction]</strong> - Move</li>
+                    <li><strong>take [item]</strong> - Pick up item</li>
+                    <li><strong>drop [item]</strong> - Drop item</li>
+                    <li><strong>inventory</strong> - Show inventory</li>
+                    <li><strong>status</strong> - Show status</li>
+                    <li><strong>use [item]</strong> - Use an item</li>
+                    <li><strong>eat [food]</strong> - Eat food</li>
+                    <li><strong>drink [water]</strong> - Drink water</li>
+                    <li><strong>talk [character]</strong> - Talk to NPC</li>
+                    <li><strong>quests</strong> - Show quests</li>
+                    <li><strong>time</strong> - Show time</li>
+                    <li><strong>wait</strong> - Wait for time to pass</li>
+                    <li><strong>examine [item/character]</strong> - Examine</li>
+                    <li><strong>equip [weapon]</strong> - Equip weapon</li>
+                    <li><strong>attack [character]</strong> - Attack</li>
+                    <li><strong>search</strong> - Search area</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="game-main">
+            <div class="terminal" id="terminal">
+                @foreach (var message in _outputMessages)
+                {
+                    <div class="@message.CssClass">@((MarkupString)message.Text.Replace("\n", "<br>"))</div>
+                }
+            </div>
+
+            <div class="input-area">
+                <input @bind="_inputText" @bind:event="oninput" @onkeydown="HandleKeyDown" placeholder="Enter command..." />
+                <button @onclick="ProcessCommand">Enter</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private GameState _gameState;
+    private CommandProcessor _commandProcessor;
+    private StoryManager _storyManager;
+    private string _inputText = "";
+    private List<OutputMessage> _outputMessages = new List<OutputMessage>();
+    private Timer _autoScrollTimer;
+    private bool _isGameStarted = false;
+
+    protected override void OnInitialized()
+    {
+        _gameState = new GameState();
+        _commandProcessor = new CommandProcessor(_gameState);
+        _storyManager = new StoryManager(_gameState);
+
+        // Initialize the game
+        _storyManager.InitializeStory();
+
+        // Add intro text
+        AddOutput(GetIntroText(), "system");
+
+        // Show the starting location
+        if (_gameState.Player?.CurrentLocation != null)
+        {
+            AddOutput(_gameState.Player.CurrentLocation.GetFullDescription(), "location");
+        }
+
+        // Set up auto-scroll timer
+        _autoScrollTimer = new Timer(100);
+        _autoScrollTimer.Elapsed += (sender, e) => InvokeAsync(ScrollToBottom);
+        _autoScrollTimer.AutoReset = false;
+        _autoScrollTimer.Start();
+    }
+
+    private async void ScrollToBottom()
+    {
+        await JSRuntime.InvokeVoidAsync("scrollToBottom", "terminal");
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            ProcessCommand();
+        }
+    }
+
+    private void ProcessCommand()
+    {
+        if (string.IsNullOrWhiteSpace(_inputText))
+            return;
+
+        // Add the command to the output
+        AddOutput($"> {_inputText}", "command");
+
+        // Process the command
+        string result = _commandProcessor.ProcessCommand(_inputText);
+
+        // Add the result to the output
+        if (!string.IsNullOrEmpty(result))
+        {
+            AddOutput(result, "response");
+        }
+
+        // Check for quest progress
+        if (_gameState.Player != null)
+        {
+            _storyManager.CheckQuestProgress(_gameState.Player);
+        }
+
+        // Check if the game is over
+        if (_gameState.IsGameOver)
+        {
+            AddOutput($"GAME OVER\n{_gameState.GameOverReason}", "game-over");
+
+            // Display statistics
+            AddOutput($"Survival Statistics:\n" +
+                     $"Days Survived: {_gameState.Day}\n" +
+                     $"Survivors Found: {_gameState.Player?.SurvivorsFound ?? 0}/{_gameState.TotalSurvivors}\n" +
+                     $"Quests Completed: {_gameState.Player?.CompletedQuests.Count ?? 0}", "stats");
+        }
+
+        // Clear the input
+        _inputText = "";
+
+        // Scroll to the bottom
+        _autoScrollTimer.Start();
+    }
+
+    private void AddOutput(string text, string cssClass)
+    {
+        _outputMessages.Add(new OutputMessage { Text = text, CssClass = cssClass });
+        StateHasChanged();
+    }
+
+    private string GetIntroText()
+    {
+        return @"
+█▀▀ █▀▀ █░█ █▀█ █▀▀ █▀   █▀█ █▀▀   ▄▀█ █▀ █░█
+█▀▀ █▄▄ █▀█ █▄█ ██▄ ▄█   █▄█ █▀░   █▀█ ▄█ █▀█
+
+A post-apocalyptic text adventure
+
+-----------------------------------------
+
+The world as you knew it ended 5 years ago in a flash of nuclear fire.
+You've survived in your small bunker, but supplies are running low, and the air filtration system is failing.
+It's time to venture out into the wasteland, to find other survivors and perhaps, a new beginning for humanity.
+
+Your mission: Find survivors and bring them together. Humanity must endure.
+
+-----------------------------------------
+
+Type 'help' for a list of commands.
+";
+    }
+
+    public void Dispose()
+    {
+        _autoScrollTimer?.Dispose();
+    }
+
+    private class OutputMessage
+    {
+        public string Text { get; set; }
+        public string CssClass { get; set; }
+    }
+}
