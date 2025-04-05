@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\eppsk\\Desktop\\Coding Folders\\Generic Projects\\C# Projects\\EchoesOfAsh\\test-project.csproj",
+      "projectUniqueName": "C:\\Users\\eppsk\\Desktop\\Coding Folders\\GIT Files\\GIT - Echoes of Ash\\EchoesOfAsh\\test-project.csproj",
       "projectName": "test-project",
-      "projectPath": "C:\\Users\\eppsk\\Desktop\\Coding Folders\\Generic Projects\\C# Projects\\EchoesOfAsh\\test-project.csproj",
+      "projectPath": "C:\\Users\\eppsk\\Desktop\\Coding Folders\\GIT Files\\GIT - Echoes of Ash\\EchoesOfAsh\\test-project.csproj",
       "packagesPath": "C:\\Users\\eppsk\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\eppsk\\Desktop\\Coding Folders\\Generic Projects\\C# Projects\\EchoesOfAsh\\obj\\",
+      "outputPath": "C:\\Users\\eppsk\\Desktop\\Coding Folders\\GIT Files\\GIT - Echoes of Ash\\EchoesOfAsh\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
